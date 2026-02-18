@@ -5,7 +5,6 @@ import {
   Layers,
   Wrench,
   BookOpen,
-  Cpu,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";

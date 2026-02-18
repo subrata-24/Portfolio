@@ -1,13 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Container from "../components/Container";
-import {
-  Users,
-  Trophy,
-  BookOpen,
-  Target,
-  TrendingUp,
-  Award,
-} from "lucide-react";
+import { Users, BookOpen, Award } from "lucide-react";
 import SectionTitle from "../components/SectionTitle";
 
 const Leadership = () => {

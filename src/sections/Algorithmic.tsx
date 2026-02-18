@@ -122,7 +122,7 @@ const Algorithmic = () => {
 
   return (
     <section
-      id="achievements"
+      id="algorithmic"
       ref={sectionRef}
       style={{
         padding: "100px 0",
