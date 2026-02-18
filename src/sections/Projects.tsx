@@ -2,7 +2,7 @@ import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import ProjectCard from "../components/ProjectCard";
 import { projects } from "../data/projects";
-import { ExternalLink } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 
 const Projects = () => {
   return (
