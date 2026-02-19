@@ -24,7 +24,7 @@ const stats = [
   {
     icon: Trophy,
     value: "3×",
-    label: "ICPC Finalist",
+    label: "ICPC Dhaka Regionalist",
     sub: "2023, 2024 & 2025",
     accent: "#d97706",
     lightBg: "#fffbeb",
