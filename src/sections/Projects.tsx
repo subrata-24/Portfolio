@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import ProjectCard from "../components/ProjectCard";
@@ -8,11 +9,14 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="py-16 sm:py-20 md:py-24 lg:py-28 relative overflow-hidden bg-gradient-to-b from-indigo-50/50 via-white to-cyan-50/30"
+      className="relative py-20 sm:py-24 md:py-28 bg-[#07070f] overflow-hidden"
     >
-      {/* Decorative blobs */}
-      <div className="absolute top-0 left-0 w-80 sm:w-96 h-80 sm:h-96 rounded-full blur-3xl bg-indigo-200/40 opacity-50 pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-80 sm:w-96 h-80 sm:h-96 rounded-full blur-3xl bg-cyan-200/30 opacity-40 pointer-events-none"></div>
+      {/* Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-700/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-700/5 rounded-full blur-[100px]" />
+      </div>
 
       <Container className="relative z-10">
         <SectionTitle
@@ -21,25 +25,46 @@ const Projects = () => {
         />
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8 mb-12 sm:mb-16">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-14">
+          {projects.map((project, i) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.55,
+                ease: [0.22, 1, 0.36, 1],
+                delay: i * 0.1,
+              }}
+            >
+              <ProjectCard project={project} />
+            </motion.div>
           ))}
         </div>
 
         {/* CTA */}
-        <div className="text-center">
-          <a
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-center"
+        >
+          <motion.a
             href="https://github.com/subrata-24"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-full font-semibold text-sm sm:text-base hover:shadow-lg hover:shadow-gray-900/30 hover:scale-105 transition-all"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+            className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-sm text-white border border-white/10 bg-white/5 hover:bg-white/8 hover:border-white/20 overflow-hidden transition-all"
           >
-            <Github className="w-5 h-5" />
-            View All on GitHub
-            <ExternalLink className="w-4 h-4" />
-          </a>
-        </div>
+            <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/8 to-transparent" />
+            <Github className="w-4 h-4 relative" />
+            <span className="relative">View All on GitHub</span>
+            <ExternalLink className="w-3.5 h-3.5 relative" />
+          </motion.a>
+        </motion.div>
       </Container>
     </section>
   );

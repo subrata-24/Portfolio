@@ -1,5 +1,6 @@
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Code2,
   Trophy,
@@ -17,54 +18,54 @@ const stats = [
     value: "2500+",
     label: "Problems Cracked",
     sub: "Across all major platforms",
-    accent: "#2563eb",
-    lightBg: "#eff6ff",
-    border: "#bfdbfe",
+    accent: "#22d3ee",
+    glow: "rgba(34,211,238,0.15)",
+    border: "rgba(34,211,238,0.2)",
   },
   {
     icon: Trophy,
     value: "3×",
     label: "ICPC Dhaka Regionalist",
     sub: "2023, 2024 & 2025",
-    accent: "#d97706",
-    lightBg: "#fffbeb",
-    border: "#fde68a",
+    accent: "#fbbf24",
+    glow: "rgba(251,191,36,0.15)",
+    border: "rgba(251,191,36,0.2)",
   },
   {
     icon: Target,
     value: "1516",
     label: "Codeforces Specialist",
     sub: "Max Rating",
-    accent: "#db2777",
-    lightBg: "#fdf2f8",
-    border: "#fbcfe8",
+    accent: "#f472b6",
+    glow: "rgba(244,114,182,0.15)",
+    border: "rgba(244,114,182,0.2)",
   },
   {
     icon: Award,
     value: "1812",
     label: "CodeChef 4★",
     sub: "Max Rating",
-    accent: "#059669",
-    lightBg: "#ecfdf5",
-    border: "#a7f3d0",
+    accent: "#34d399",
+    glow: "rgba(52,211,153,0.15)",
+    border: "rgba(52,211,153,0.2)",
   },
   {
     icon: TrendingUp,
     value: "1710",
     label: "LeetCode Max",
     sub: "Highest Rating",
-    accent: "#ea580c",
-    lightBg: "#fff7ed",
-    border: "#fed7aa",
+    accent: "#fb923c",
+    glow: "rgba(251,146,60,0.15)",
+    border: "rgba(251,146,60,0.2)",
   },
   {
     icon: Zap,
     value: "150+",
     label: "Students Mentored",
     sub: "17th → 13th rank improvement",
-    accent: "#7c3aed",
-    lightBg: "#f5f3ff",
-    border: "#ddd6fe",
+    accent: "#a78bfa",
+    glow: "rgba(167,139,250,0.15)",
+    border: "rgba(167,139,250,0.2)",
   },
 ];
 
@@ -73,458 +74,236 @@ const contestHighlights = [
     rank: "12th",
     event: "Uttara IUPC 2025",
     team: "PSTU_Salsabil",
-    accent: "#d97706",
-    lightBg: "#fffbeb",
-    border: "#fde68a",
+    accent: "#fbbf24",
+    border: "rgba(251,191,36,0.2)",
   },
   {
     rank: "44th",
     event: "BUET IUPC 2026",
     team: "PSTU_Nilkomol",
-    accent: "#059669",
-    lightBg: "#ecfdf5",
-    border: "#a7f3d0",
+    accent: "#34d399",
+    border: "rgba(52,211,153,0.2)",
   },
   {
     rank: "44th",
     event: "CUET IUPC 2023",
     team: "PSTU_BinaryMindSet",
-    accent: "#2563eb",
-    lightBg: "#eff6ff",
-    border: "#bfdbfe",
+    accent: "#22d3ee",
+    border: "rgba(34,211,238,0.2)",
   },
   {
     rank: "Champion",
     event: "PSTU IUPC 2025",
     team: "Intra-university",
-    accent: "#059669",
-    lightBg: "#ecfdf5",
-    border: "#a7f3d0",
+    accent: "#34d399",
+    border: "rgba(52,211,153,0.2)",
   },
 ];
 
+const fadeUp = (delay = 0) => ({
+  hidden: { opacity: 0, y: 28 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1], delay },
+  },
+});
+
 const Algorithmic = () => {
   const navigate = useNavigate();
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.1 },
-    );
-    if (sectionRef.current) obs.observe(sectionRef.current);
-    return () => obs.disconnect();
-  }, []);
 
   return (
     <section
       id="algorithmic"
-      ref={sectionRef}
-      style={{
-        padding: "100px 0",
-        background: "#ffffff",
-        position: "relative",
-        overflow: "hidden",
-        fontFamily: "'DM Sans', sans-serif",
-      }}
+      className="relative py-24 bg-[#07070f] overflow-hidden"
     >
-      <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
-
-      <style>{`
-        @keyframes alg-fadeUp {
-          from { opacity: 0; transform: translateY(28px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes alg-pulse-light {
-          0%,100% { opacity: 0.3; transform: scale(1); }
-          50%      { opacity: 0.6; transform: scale(1.1); }
-        }
-
-        .alg-stat-card {
-          border-radius: 24px;
-          padding: 28px;
-          position: relative;
-          overflow: hidden;
-          transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
-          cursor: default;
-        }
-        .alg-stat-card:hover {
-          transform: translateY(-6px);
-        }
-
-        .alg-contest-card {
-          border-radius: 20px;
-          padding: 24px 28px;
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
-          cursor: default;
-        }
-        .alg-contest-card:hover {
-          transform: translateY(-4px);
-        }
-
-        .alg-cta-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          padding: 14px 32px;
-          border-radius: 50px;
-          font-size: 15px;
-          font-weight: 700;
-          text-decoration: none;
-          cursor: pointer;
-          border: none;
-          transition: all 0.28s ease;
-          letter-spacing: 0.03em;
-          font-family: 'DM Sans', sans-serif;
-        }
-        .alg-cta-btn:hover { transform: translateY(-2px); }
-        .alg-cta-btn:hover .alg-arrow { transform: translateX(4px); }
-        .alg-arrow { transition: transform 0.25s ease; }
-      `}</style>
-
-      {/* Light decorative blobs */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "-8%",
-            right: "0%",
-            width: 500,
-            height: 500,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, #eff6ff 0%, transparent 70%)",
-            animation: "alg-pulse-light 12s ease-in-out infinite",
-            filter: "blur(40px)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: "0%",
-            left: "-5%",
-            width: 450,
-            height: 450,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, #f5f3ff 0%, transparent 70%)",
-            animation: "alg-pulse-light 15s ease-in-out infinite 5s",
-            filter: "blur(40px)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "radial-gradient(circle at 2px 2px, rgba(99,102,241,0.05) 1px, transparent 0)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+      {/* Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-600/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-violet-700/5 rounded-full blur-[100px]" />
       </div>
 
-      <div
-        style={{
-          maxWidth: 1140,
-          margin: "0 auto",
-          padding: "0 28px",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        {/* ── Header ── */}
-        <div
-          style={{
-            marginBottom: 64,
-            animation: isVisible ? "alg-fadeUp 0.65s ease both" : "none",
-            opacity: isVisible ? undefined : 0,
-          }}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          variants={fadeUp(0)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mb-16"
         >
           <SectionTitle
             title="🎯 Algorithmic Excellence"
             subtitle="Competing nationally, mentoring hundreds, and building algorithmic foundations that power production-grade systems"
           />
-
-          <div
-            style={{
-              height: 2,
-              marginTop: 32,
-              background:
-                "linear-gradient(90deg, #2563eb 0%, rgba(37,99,235,0.15) 50%, transparent 100%)",
-            }}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="h-[1.5px] mt-8 bg-gradient-to-r from-cyan-500 via-cyan-500/20 to-transparent origin-left"
           />
-        </div>
+        </motion.div>
 
-        {/* ── Stats Grid ── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: 16,
-            marginBottom: 56,
-          }}
-        >
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-14">
           {stats.map((stat, i) => {
             const Icon = stat.icon;
             const isHov = hovered === i;
             return (
-              <div
+              <motion.div
                 key={i}
-                className="alg-stat-card"
+                variants={fadeUp(i * 0.08)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 260 }}
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
+                className="relative rounded-2xl p-6 border bg-white/3 backdrop-blur-sm cursor-default overflow-hidden group"
                 style={{
-                  animation: isVisible
-                    ? `alg-fadeUp 0.55s ease ${i * 0.08}s both`
-                    : "none",
-                  opacity: isVisible ? undefined : 0,
-                  background: isHov ? stat.lightBg : "#fafafa",
-                  border: `1.5px solid ${isHov ? stat.border : "#f1f5f9"}`,
-                  boxShadow: isHov
-                    ? `0 20px 60px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.04)`
-                    : "0 2px 8px rgba(0,0,0,0.04)",
+                  borderColor: isHov ? stat.border : "rgba(255,255,255,0.06)",
+                  boxShadow: isHov ? `0 0 40px ${stat.glow}` : "none",
+                  transition: "border-color 0.3s, box-shadow 0.3s",
                 }}
               >
-                <div style={{ position: "relative", zIndex: 1 }}>
-                  {/* Icon row */}
-                  <div
+                {/* Icon row */}
+                <div className="flex items-center justify-between mb-5">
+                  <motion.div
+                    animate={
+                      isHov
+                        ? { scale: 1.12, rotate: 6 }
+                        : { scale: 1, rotate: 0 }
+                    }
+                    transition={{ duration: 0.3 }}
+                    className="w-11 h-11 rounded-xl flex items-center justify-center border"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginBottom: 20,
+                      background: stat.glow,
+                      borderColor: stat.border,
                     }}
                   >
-                    <div
-                      style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 14,
-                        background: stat.lightBg,
-                        border: `1.5px solid ${stat.border}`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        transition: "all 0.3s ease",
-                        transform: isHov
-                          ? "scale(1.1) rotate(6deg)"
-                          : "scale(1)",
-                      }}
-                    >
-                      <Icon size={20} style={{ color: stat.accent }} />
-                    </div>
-                    <span
-                      style={{
-                        fontSize: 10,
-                        fontWeight: 800,
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        color: stat.accent,
-                        background: stat.lightBg,
-                        padding: "3px 10px",
-                        borderRadius: 50,
-                        border: `1px solid ${stat.border}`,
-                      }}
-                    >
-                      Verified
-                    </span>
-                  </div>
-
-                  {/* Value */}
-                  <div
+                    <Icon size={20} style={{ color: stat.accent }} />
+                  </motion.div>
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border"
                     style={{
-                      fontFamily: "'Bebas Neue', sans-serif",
-                      fontSize: "3.2rem",
-                      letterSpacing: "0.02em",
-                      lineHeight: 1,
                       color: stat.accent,
-                      marginBottom: 6,
+                      background: stat.glow,
+                      borderColor: stat.border,
                     }}
                   >
-                    {stat.value}
-                  </div>
-
-                  <p
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 700,
-                      color: "#0f172a",
-                      marginBottom: 4,
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {stat.label}
-                  </p>
-                  <p
-                    style={{ fontSize: 12, color: "#94a3b8", fontWeight: 500 }}
-                  >
-                    {stat.sub}
-                  </p>
+                    Verified
+                  </span>
                 </div>
 
-                {/* Bottom accent line */}
+                {/* Value */}
                 <div
+                  className="text-5xl font-black leading-none mb-2 tracking-tight"
+                  style={{ color: stat.accent }}
+                >
+                  {stat.value}
+                </div>
+                <p className="text-sm font-bold text-white mb-1">
+                  {stat.label}
+                </p>
+                <p className="text-xs text-gray-500">{stat.sub}</p>
+
+                {/* Bottom accent line */}
+                <motion.div
+                  animate={isHov ? { scaleX: 1 } : { scaleX: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="absolute bottom-0 left-0 right-0 h-[2px] origin-left rounded-b-2xl"
                   style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: 2,
                     background: `linear-gradient(90deg, ${stat.accent}, transparent)`,
-                    transform: isHov ? "scaleX(1)" : "scaleX(0)",
-                    transformOrigin: "left",
-                    transition: "transform 0.4s ease",
-                    borderRadius: "0 0 24px 24px",
                   }}
                 />
-              </div>
+              </motion.div>
             );
           })}
         </div>
 
-        {/* ── Contest Highlights ── */}
-        <div
-          style={{
-            animation: isVisible ? "alg-fadeUp 0.65s ease 0.55s both" : "none",
-            opacity: isVisible ? undefined : 0,
-            marginBottom: 56,
-          }}
+        {/* Contest Highlights */}
+        <motion.div
+          variants={fadeUp(0.3)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mb-14"
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-              marginBottom: 28,
-            }}
-          >
-            <h3
-              style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: "2rem",
-                letterSpacing: "0.05em",
-                color: "#0f172a",
-                margin: 0,
-              }}
-            >
+          <div className="flex items-center gap-4 mb-7">
+            <h3 className="text-2xl font-black tracking-tight text-white whitespace-nowrap">
               Notable Contest Rankings
             </h3>
-            <div
-              style={{
-                flex: 1,
-                height: 1.5,
-                background: "linear-gradient(90deg, #e2e8f0, transparent)",
-              }}
-            />
+            <div className="flex-1 h-[1.5px] bg-gradient-to-r from-white/10 to-transparent" />
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-              gap: 14,
-            }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {contestHighlights.map((c, i) => (
-              <div
+              <motion.div
                 key={i}
-                className="alg-contest-card"
-                style={{
-                  animation: isVisible
-                    ? `alg-fadeUp 0.5s ease ${0.6 + i * 0.1}s both`
-                    : "none",
-                  background: c.lightBg,
-                  border: `1.5px solid ${c.border}`,
-                  boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
-                }}
+                variants={fadeUp(0.35 + i * 0.08)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                whileHover={{ y: -4, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 280 }}
+                className="relative rounded-2xl p-5 border bg-white/3 backdrop-blur-sm overflow-hidden group cursor-default"
+                style={{ borderColor: c.border }}
               >
                 <div
-                  style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: "2.4rem",
-                    letterSpacing: "0.04em",
-                    color: c.accent,
-                    lineHeight: 1,
-                    marginBottom: 6,
-                  }}
+                  className="text-4xl font-black leading-none mb-2 tracking-tight"
+                  style={{ color: c.accent }}
                 >
                   {c.rank}
                 </div>
-                <p
+                <p className="text-sm font-bold text-white mb-1">{c.event}</p>
+                <p className="text-xs text-gray-500">{c.team}</p>
+                {/* Subtle glow bg */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
                   style={{
-                    fontSize: 15,
-                    fontWeight: 700,
-                    color: "#0f172a",
-                    marginBottom: 4,
+                    background: `radial-gradient(ellipse at 50% 100%, ${c.border} 0%, transparent 70%)`,
                   }}
-                >
-                  {c.event}
-                </p>
-                <p style={{ fontSize: 12, color: "#64748b", fontWeight: 500 }}>
-                  {c.team}
-                </p>
-              </div>
+                />
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* ── CTA ── */}
-        <div
-          style={{
-            animation: isVisible ? "alg-fadeUp 0.65s ease 0.75s both" : "none",
-            opacity: isVisible ? undefined : 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 20,
-            padding: "32px 40px",
-            borderRadius: 24,
-            background: "#f8faff",
-            border: "1.5px solid #e0e7ff",
-          }}
+        {/* CTA */}
+        <motion.div
+          variants={fadeUp(0.5)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="relative flex flex-wrap items-center justify-between gap-5 p-8 rounded-2xl border border-white/8 bg-white/3 overflow-hidden"
         >
-          <div>
-            <h3
-              style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: "2rem",
-                letterSpacing: "0.04em",
-                color: "#0f172a",
-                margin: 0,
-              }}
-            >
+          {/* Background glow */}
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-violet-600/5 pointer-events-none" />
+
+          <div className="relative">
+            <h3 className="text-2xl font-black text-white tracking-tight">
               See the Complete Journey
             </h3>
           </div>
-          <button
-            className="alg-cta-btn"
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
             onClick={() => navigate("/competitive-journey")}
-            style={{
-              background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
-              color: "#fff",
-              boxShadow: "0 8px 32px rgba(79,70,229,0.25)",
-            }}
+            className="relative group flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-cyan-500 to-violet-600 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 overflow-hidden transition-shadow"
           >
-            View My Journey
-            <ArrowRight size={17} className="alg-arrow" />
-          </button>
-        </div>
+            <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            <span className="relative">View My Journey</span>
+            <ArrowRight
+              size={16}
+              className="relative group-hover:translate-x-1 transition-transform"
+            />
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   );
