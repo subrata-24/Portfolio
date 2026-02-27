@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import Container from "../components/Container";
 import profile from "../assets/profile.png";
 import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
@@ -38,14 +38,18 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, [text, isDeleting, loopNum, typingSpeed]);
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (delay = 0) => ({
+  const fadeUp = (delay = 0): Variants => ({
+    hidden: { opacity: 0, y: 28 },
+    visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay },
-    }),
-  };
+      transition: {
+        duration: 0.65,
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+        delay,
+      },
+    },
+  });
 
   const stats = [
     {
