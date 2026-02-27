@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import Container from "../components/Container";
 import { Users, BookOpen, Award } from "lucide-react";
 import SectionTitle from "../components/SectionTitle";
