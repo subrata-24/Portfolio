@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { ArrowLeft, CheckCircle2, Star } from "lucide-react";
 
 const journey = [
@@ -110,12 +110,16 @@ const CompetitiveJourney = () => {
 
   const selected = journey[activePhase];
 
-  const fadeUp = (delay = 0) => ({
-    hidden: { opacity: 0, y: 24 },
+  const fadeUp = (delay = 0): Variants => ({
+    hidden: { opacity: 0, y: 28 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1], delay },
+      transition: {
+        duration: 0.65,
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+        delay,
+      },
     },
   });
 
