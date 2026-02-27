@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import Container from "../components/Container";
 import profile from "../assets/profile.png";
-import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const Hero = () => {
   const [text, setText] = useState("");

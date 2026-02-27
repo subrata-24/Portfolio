@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -79,7 +78,6 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + i * 0.07, duration: 0.4 }}
-                onClick={() => setActiveLink(link.id)}
                 className="relative px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200 group"
               >
                 {/* Hover pill bg */}
